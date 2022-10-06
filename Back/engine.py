@@ -1,7 +1,8 @@
 import itertools
+import unidecode
 
 
-def get_random_string():
+def password_guesser():
     # Permet d'avoir toutes les combinaisons possibles d'un seul mot
     # test = itertools.permutations(text, len(text))
     # print(list(test))
@@ -21,11 +22,43 @@ def get_random_string():
     option = input()
     options.append(option)
     # On récupère la longueur de mon tableau contenant le prenom, le nom de chien et la date
-    lenghtArray = len(array)
+    lenghtarray = len(array)
     allinfo = []
+    print(array)
+    for opt in options:
+        match opt:
+            case "maj":
+                print("Full majuscule")
+                indent = 0
+                for val in array:
+                    array[indent] = val.upper()
+                    indent = indent + 1
+            case "min":
+                print("Full minuscule")
+                indent = 0
+                for val in array:
+                    array[indent] = val.lower()
+                    indent = indent + 1
+            case "firstMin":
+                print("Première majuscule")
+                indent = 0
+                for val in array:
+                    array[indent] = val.capitalize()
+                    indent = indent + 1
+            case "noAccent":
+                print("Sans accent")
+                indent = 0
+                for val in array:
+                    array[indent] = unidecode.unidecode(val)
+                    indent = indent + 1
+            case "leet":
+                print("Full l33t")
+            case _:
+                print("Ya r")
+
     # Pour chaque élément de mon tableau
-    for i in range(lenghtArray):
-        tabpermut = itertools.permutations(array, i+1)
+    for i in range(lenghtarray):
+        tabpermut = itertools.permutations(array, i + 1)
         allinfo = allinfo + list(tabpermut)
 
     tabinfos = list(allinfo)
@@ -35,4 +68,4 @@ def get_random_string():
     print(listpwd)
 
 
-get_random_string()
+password_guesser()
