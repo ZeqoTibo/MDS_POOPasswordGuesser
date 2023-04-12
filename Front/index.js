@@ -1,108 +1,58 @@
-$(document).ready(function() {
-    $('#contact_form').bootstrapValidator({
-        // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-            first_name: {
-                validators: {
-                    stringLength: {
-                        min: 2,
-                    },
-                    notEmpty: {
-                        message: 'Please enter your First Name'
-                    }
-                }
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('addWord').addEventListener('click', function () {
+            console.log("test");
+    });
+    let addButton = document.getElementById('addWord');
+    let inputContainer = document.getElementById('inputContainer');
+    // Fonction qui crée et ajoute un nouvel input
+    function addInput() {
+        let divElement = document.createElement('div');
+        divElement.className = 'input-group';
+        let newInput = document.createElement('input');
+        newInput.type = 'name';
+        newInput.className = 'form-control word';
+        newInput.placeholder = 'Mot à saisir';
+        inputContainer.appendChild(divElement);
+        divElement.appendChild(newInput);
+    }
+    // Ajout d'un écouteur d'événement pour le clic sur le bouton
+    addButton.addEventListener('click', addInput);
+    document.getElementById('contact_form').addEventListener('submit', function (e) {
+        let words = document.getElementsByClassName('word');
+        let optionsChecked = document.getElementsByClassName('option');
+        e.preventDefault();
+        $.ajax({
+            url:' http://127.0.0.1:5000/api',
+            type: 'GET',
+            success: function (data) {
+                console.log(data);
             },
-            last_name: {
-                validators: {
-                    stringLength: {
-                        min: 2,
-                    },
-                    notEmpty: {
-                        message: 'Please enter your Last Name'
-                    }
-                }
-            },
-            user_name: {
-                validators: {
-                    stringLength: {
-                        min: 8,
-                    },
-                    notEmpty: {
-                        message: 'Please enter your Username'
-                    }
-                }
-            },
-            user_password: {
-                validators: {
-                    stringLength: {
-                        min: 8,
-                    },
-                    notEmpty: {
-                        message: 'Please enter your Password'
-                    }
-                }
-            },
-            confirm_password: {
-                validators: {
-                    stringLength: {
-                        min: 8,
-                    },
-                    notEmpty: {
-                        message: 'Please confirm your Password'
-                    }
-                }
-            },
-            email: {
-                validators: {
-                    notEmpty: {
-                        message: 'Please enter your Email Address'
-                    },
-                    emailAddress: {
-                        message: 'Please enter a valid Email Address'
-                    }
-                }
-            },
-            contact_no: {
-                validators: {
-                    stringLength: {
-                        min: 12,
-                        max: 12,
-                        notEmpty: {
-                            message: 'Please enter your Contact No.'
-                        }
-                    }
-                },
-                department: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Please select your Department/Office'
-                        }
-                    }
-                },
+            error: function (data) {
+                console.log(data);
             }
-        }
-    })
-        .on('success.form.bv', function(e) {
-            $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
-            $('#contact_form').data('bootstrapValidator').resetForm();
-
-            // Prevent form submission
-            e.preventDefault();
-
-            // Get the form instance
-            var $form = $(e.target);
-
-            // Get the BootstrapValidator instance
-            var bv = $form.data('bootstrapValidator');
-
-            // Use Ajax to submit form data
-            $.post($form.attr('action'), $form.serialize(), function(result) {
-                console.log(result);
-            }, 'json');
         });
+        console.log('ok');
+    });
+
 });
+//.on('success.form.bv', function(e) {
+//             console.log("ok")
+//             $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
+//             $('#contact_form').data('bootstrapValidator').resetForm();
+//
+//             // Prevent form submission
+//             e.preventDefault();
+//
+//             // Get the form instance
+//             var $form = $(e.target);
+//
+//             // Get the BootstrapValidator instance
+//             var bv = $form.data('bootstrapValidator');
+//
+//             // Use Ajax to submit form data
+//             $.post($form.attr('action'), $form.serialize(), function(result) {
+//                 console.log(result);
+//             }, 'json');
+//         });
+//
+// });

@@ -1,5 +1,14 @@
 import itertools
-import unidecode
+
+REPLACE = {letter: str(index) for index, letter in enumerate('oizeasgtb')}
+
+
+def Leet2Combos(word):
+    possibles = []
+    for l in word.lower():
+        ll = REPLACE.get(l, l)
+        possibles.append((l,) if ll == l else (l, ll))
+    return [''.join(t) for t in itertools.product(*possibles)]
 
 
 def password_guesser():
@@ -9,6 +18,7 @@ def password_guesser():
     array = []
     listpwd = []
     options = []
+    leetTab = []
     print("Veuillez saisir un prénom : ")
     prenom = input()
     array.append(prenom)
@@ -24,7 +34,6 @@ def password_guesser():
     # On récupère la longueur de mon tableau contenant le prenom, le nom de chien et la date
     lenghtarray = len(array)
     allinfo = []
-    print(array)
     for opt in options:
         match opt:
             case "maj":
@@ -53,6 +62,12 @@ def password_guesser():
                     indent = indent + 1
             case "leet":
                 print("Full l33t")
+                indent = 0
+                for val in array:
+                    leetTab = leetTab + Leet2Combos(val)
+                    indent = indent + 1
+                # comment push mon leetTab dans mon array
+                array.append(leetTab)
             case _:
                 print("Ya r")
 
@@ -64,6 +79,8 @@ def password_guesser():
     tabinfos = list(allinfo)
     for tabinfo in tabinfos:
         listpwd.append(''.join(tabinfo))
+
+    print(leetTab)
 
     print(listpwd)
 
