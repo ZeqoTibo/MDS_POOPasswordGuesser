@@ -1,3 +1,5 @@
+import itertools
+
 from .ManageWords import ManageWords
 
 
@@ -31,12 +33,16 @@ class Leet(ManageWords):
         leet_words = []
         for word in self.words:
             leet_word = ''
+            leet_chars = []
             for char in word:
-                if char.lower() in leet_dict:
-                    leet_word += leet_dict[char.lower()]
+                if char in leet_dict:
+                    leet_chars.append([char, leet_dict[char]])
                 else:
-                    leet_word += char
-            leet_words.append(leet_word)
+                    leet_chars.append([char])
+            possibility = itertools.product(*leet_chars)
+            for possibility in possibility:
+                leet_words.append(''.join(possibility))
+
         return leet_words
 
     def run(self):

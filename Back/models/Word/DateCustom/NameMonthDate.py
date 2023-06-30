@@ -7,16 +7,8 @@ class NameMonthDate(ManageWords):
     def __init__(self, words):
         super().__init__(words)
 
-    @classmethod
-    def check_date_format(cls, word):
-        try:
-            datetime.fromisoformat(word)
-            return True
-        except ValueError:
-            return False
-
     @staticmethod
-    def get_name_month(word):
+    def _get_name_month(word):
         date = datetime.strptime(word, '%Y-%m-%d').date()
         month = str(date.month)
 
@@ -25,21 +17,24 @@ class NameMonthDate(ManageWords):
             'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
         ]
 
+        month_namesEN = [
+            'january', 'february', 'march', 'april', 'may', 'june',
+            'july', 'august', 'september', 'october', 'november', 'december'
+        ]
+
         try:
             month_number = int(month)
             if 1 <= month_number <= 12:
                 month_name = month_names[month_number - 1]
-                return month_name
+                month_nameEN = month_namesEN[month_number - 1]
+                result = [month_nameEN] + [month_name]
+                return result
         except ValueError:
             pass
 
         return None
 
     def run(self):
-        for word in self.words:
-            if NameMonthDate.check_date_format(word):
-                result = NameMonthDate.get_name_month(word)
-                if len(result) > 0:
-                    self.words.extend(result)
-
-        return self.words
+        result = NameMonthDate._get_name_month(self.words)
+        if len(result) > 0:
+            return result
