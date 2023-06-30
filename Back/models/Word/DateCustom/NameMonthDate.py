@@ -8,7 +8,7 @@ class NameMonthDate(ManageWords):
         super().__init__(words)
 
     @staticmethod
-    def _get_name_month(word):
+    def get_name_month(word):
         date = datetime.strptime(word, '%Y-%m-%d').date()
         month = str(date.month)
 
@@ -35,6 +35,6 @@ class NameMonthDate(ManageWords):
         return None
 
     def run(self):
-        result = NameMonthDate._get_name_month(self.words)
+        result = NameMonthDate.get_name_month(self.words)
         if len(result) > 0:
             return result

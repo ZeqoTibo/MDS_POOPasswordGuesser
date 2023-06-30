@@ -1,5 +1,6 @@
 from .ManageWords import ManageWords
 
+
 # Classe permettant de mettre en minuscule les mots
 class Lowercase(ManageWords):
 

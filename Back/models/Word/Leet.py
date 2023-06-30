@@ -32,7 +32,6 @@ class Leet(ManageWords):
         }
         leet_words = []
         for word in self.words:
-            leet_word = ''
             leet_chars = []
             for char in word:
                 if char in leet_dict:

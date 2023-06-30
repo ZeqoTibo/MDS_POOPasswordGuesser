@@ -6,8 +6,10 @@ class Capitalize(ManageWords):
     def __init__(self, words):
         super().__init__(words)
 
-    def capitalizeWord(self):
+    def run(self):
         return [word.capitalize() for word in self.words]
 
-    def run(self):
-        return self.capitalizeWord()
+
+class ToCapitalize(Capitalize):
+    def __init__(self, words):
+        super().__init__(words)

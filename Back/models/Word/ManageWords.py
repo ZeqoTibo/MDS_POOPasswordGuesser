@@ -1,7 +1,7 @@
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 
 
-class ManageWords:
+class ManageWords(ABC):
     @abstractmethod
     def __init__(self, words):
         self.words = words
